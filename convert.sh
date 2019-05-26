@@ -84,7 +84,6 @@ find squashfs-root -name 'resources'
 DLD=$(wget -q "https://github.com/trouch/CreawsomeMod/releases" -O - | grep -e "CreawsomeMod-.*zip" | head -n 1 | cut -d '"' -f 2)
 wget -c "https://github.com/$DLD"
 unzip -q -o CreawsomeMod-*.zip
-diff ./resources ./squashfs-root/usr/bin/resources
 rm -rf squashfs-root/usr/bin/resources
 mv ./resources ./squashfs-root/usr/bin/resources
 rm -rf CreawsomeMod-*.zip __MACOSX || true
