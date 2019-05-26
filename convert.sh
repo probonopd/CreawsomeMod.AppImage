@@ -85,8 +85,8 @@ rm -rf squashfs-root/usr/bin/resources
 DLD=$(wget -q "https://github.com/trouch/CreawsomeMod/releases" -O - | grep -e "CreawsomeMod-.*zip" | head -n 1 | cut -d '"' -f 2)
 wget -c "https://github.com/$DLD"
 unzip -o CreawsomeMod-*.zip
-sudo cp CreawesomeMod-*/resources squashfs-root/usr/bin/resources
-rm -rf CreawsomeMod-*
+mv ./resources ./squashfs-root/usr/bin/resources
+rm -rf CreawsomeMod-*.zip __MACOSX || true
 MODVER=$(echo $DLD | cut -d '/' -f 6)
 export VERSION=$VERSION.mod$MODVER
 
