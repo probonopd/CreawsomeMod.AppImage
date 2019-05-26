@@ -81,10 +81,11 @@ find squashfs-root -name '*.desktop' -exec sed -i -e 's|^Name=.*|Name=CreawsomeM
 
 # Replace the resources
 find squashfs-root -name 'resources'
-rm -rf squashfs-root/usr/bin/resources
 DLD=$(wget -q "https://github.com/trouch/CreawsomeMod/releases" -O - | grep -e "CreawsomeMod-.*zip" | head -n 1 | cut -d '"' -f 2)
 wget -c "https://github.com/$DLD"
-unzip -o CreawsomeMod-*.zip
+unzip -q -o CreawsomeMod-*.zip
+diff ./resources ./squashfs-root/usr/bin/resources
+rm -rf squashfs-root/usr/bin/resources
 mv ./resources ./squashfs-root/usr/bin/resources
 rm -rf CreawsomeMod-*.zip __MACOSX || true
 MODVER=$(echo $DLD | cut -d '/' -f 6)
@@ -98,4 +99,5 @@ chmod +x appimagetool-x86_64.AppImage
 
 ./appimagetool-x86_64.AppImage -g squashfs-root
 
-mv Cura*.AppImage* "$OLD_CWD"
+mv Cura*.AppImage* "$OLD_CWD" || true
+mv Ultimaker*.AppImage* "$OLD_CWD" || true
