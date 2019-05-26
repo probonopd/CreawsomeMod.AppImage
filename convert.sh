@@ -76,8 +76,18 @@ else
   xorriso -indev "$filename" -osirrox on -extract / squashfs-root
 fi
 
-find squashfs-root -name '*.desktop'
+# Rename the application
+find squashfs-root -name '*.desktop' -exec sed -i -e 's|^Name=.*|Name=CreawsomeMod|g' {} \;
+
+# Replace the resources
 find squashfs-root -name 'resources'
+rm -rf squashfs-root/usr/bin/resources
+DLD=$(wget -q "https://github.com/trouch/CreawsomeMod/releases" -O - | grep -e "CreawsomeMod-.*zip" | head -n 1 | cut -d '"' -f 2)
+wget -c "https://github.com/$DLD"
+unzip CreawsomeMod-*.zip -o -d CreawesomeMod
+sudo cp CreawesomeMod/resources squashfs-root/usr/bin/resources
+MODVER=$(echo $DLD | cut -d '/' -f 6)
+export VERSION=$VERSION.mod$MODVER
 
 # must clean up before building new AppImage so that we won't accidentally move it to $OLD_CWD like the real AppImage
 rm "$filename"
