@@ -67,7 +67,17 @@ if echo "$filename" | grep -q '^Ultimaker_'; then
     filename="$new_filename"
 fi
 
-xorriso -indev "$filename" -osirrox on -extract / AppDir
+MAGIC=$( xxd -p -l 11 "$filename" | tail -c8)
+if [ "$MAGIC" == "0414902" ] ; then
+  # Type 2 image
+  chmod +x "$filename" && ./"$filename" --appimage-extract
+else
+  # Assume type 1 image
+  xorriso -indev "$filename" -osirrox on -extract / squashfs-root
+fi
+
+find squashfs-root -name '*.desktop'
+find squashfs-root -name 'resources'
 
 # must clean up before building new AppImage so that we won't accidentally move it to $OLD_CWD like the real AppImage
 rm "$filename"
@@ -75,7 +85,6 @@ rm "$filename"
 wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 chmod +x appimagetool-x86_64.AppImage
 
-export UPD_INFO="gh-releases-zsync|TheAssassin|cura-type2-appimages|latest|Cura*-x86_64.AppImage.zsync"
-./appimagetool-x86_64.AppImage -u "$UPD_INFO" AppDir
+./appimagetool-x86_64.AppImage -g squashfs-root
 
 mv Cura*.AppImage* "$OLD_CWD"
