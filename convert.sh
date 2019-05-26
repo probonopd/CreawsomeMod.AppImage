@@ -97,6 +97,3 @@ wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/app
 chmod +x appimagetool-x86_64.AppImage
 
 ./appimagetool-x86_64.AppImage -g squashfs-root
-
-mv Cura*.AppImage* "$OLD_CWD" || true
-mv Ultimaker*.AppImage* "$OLD_CWD" || true
