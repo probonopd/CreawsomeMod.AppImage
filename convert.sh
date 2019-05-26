@@ -57,7 +57,7 @@ OLD_CWD=$(readlink -f .)
 
 pushd "$BUILD_DIR"
 
-wget -c "$URL"
+wget -q -c "$URL"
 
 # ensure consistent filename
 filename=$(ls -1 *Cura*.AppImage | head -n1)
@@ -82,7 +82,7 @@ find squashfs-root -name '*.desktop' -exec sed -i -e 's|^Name=.*|Name=CreawsomeM
 # Replace the resources
 find squashfs-root -name 'resources'
 DLD=$(wget -q "https://github.com/trouch/CreawsomeMod/releases" -O - | grep -e "CreawsomeMod-.*zip" | head -n 1 | cut -d '"' -f 2)
-wget -c "https://github.com/$DLD"
+wget -q -c "https://github.com/$DLD"
 unzip -q -o CreawsomeMod-*.zip
 rm -rf squashfs-root/usr/bin/resources
 mv ./resources ./squashfs-root/usr/bin/resources
