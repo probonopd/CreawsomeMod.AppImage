@@ -2,6 +2,8 @@
 
 This bundles Ultimaker Cura with [CreawsomeMod](https://github.com/trouch/CreawsomeMod/) as an AppImage for Linux.
 
+![](https://user-images.githubusercontent.com/2480569/58385523-2f554f80-7fe1-11e9-94fc-48b6ad2071f6.png)
+
 ## Download AppImages
 
 The AppImage build using this script on Travis CI can be found on the [release page](releases/).
