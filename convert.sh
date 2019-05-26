@@ -97,3 +97,5 @@ wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/app
 chmod +x appimagetool-x86_64.AppImage
 
 ./appimagetool-x86_64.AppImage -g squashfs-root
+
+mv CreawsomeMod*.AppImage* "$OLD_CWD" # .travis.yml picks it up from there
