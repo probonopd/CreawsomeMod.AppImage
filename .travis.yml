@@ -13,9 +13,9 @@ script:
 after_success:
   - ls -lh
   - wget -c https://github.com/TheAssassin/uploadtool/raw/master/upload.sh
-  # make sure only pushes to rewrite create a new release, otherwise pretend PR and upload to transfer.sh
+  # make sure only pushes to rewrite master a new release, otherwise pretend PR and upload to transfer.sh
   - if [ "$TRAVIS_BRANCH" != "master" ] && [ "$TRAVIS_TAG" == "" ]; then export TRAVIS_EVENT_TYPE=pull_request; fi
-  - bash ./upload.sh Cura*.AppImage*
+  - bash ./upload.sh CreawsomeMod*.AppImage*
 
 branches:
   except:

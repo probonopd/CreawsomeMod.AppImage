@@ -67,7 +67,28 @@ if echo "$filename" | grep -q '^Ultimaker_'; then
     filename="$new_filename"
 fi
 
-xorriso -indev "$filename" -osirrox on -extract / AppDir
+MAGIC=$( xxd -p -l 11 "$filename" | tail -c8)
+if [ "$MAGIC" == "0414902" ] ; then
+  # Type 2 image
+  chmod +x "$filename" && ./"$filename" --appimage-extract
+else
+  # Assume type 1 image
+  xorriso -indev "$filename" -osirrox on -extract / squashfs-root
+fi
+
+# Rename the application
+find squashfs-root -name '*.desktop' -exec sed -i -e 's|^Name=.*|Name=CreawsomeMod|g' {} \;
+
+# Replace the resources
+find squashfs-root -name 'resources'
+DLD=$(wget -q "https://github.com/trouch/CreawsomeMod/releases" -O - | grep -e "CreawsomeMod-.*zip" | head -n 1 | cut -d '"' -f 2)
+wget -c "https://github.com/$DLD"
+unzip -q -o CreawsomeMod-*.zip
+rm -rf squashfs-root/usr/bin/resources
+mv ./resources ./squashfs-root/usr/bin/resources
+rm -rf CreawsomeMod-*.zip __MACOSX || true
+MODVER=$(echo $DLD | cut -d '/' -f 6)
+export VERSION=$VERSION.mod$MODVER
 
 # must clean up before building new AppImage so that we won't accidentally move it to $OLD_CWD like the real AppImage
 rm "$filename"
@@ -75,7 +96,7 @@ rm "$filename"
 wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 chmod +x appimagetool-x86_64.AppImage
 
-export UPD_INFO="gh-releases-zsync|TheAssassin|cura-type2-appimages|latest|Cura*-x86_64.AppImage.zsync"
-./appimagetool-x86_64.AppImage -u "$UPD_INFO" AppDir
+./appimagetool-x86_64.AppImage -g squashfs-root
 
-mv Cura*.AppImage* "$OLD_CWD"
+mv Cura*.AppImage* "$OLD_CWD" || true
+mv Ultimaker*.AppImage* "$OLD_CWD" || true
