@@ -11,7 +11,7 @@ fi
 if (grep -q "BETA" <<< "$VERSION"); then
     URL="https://download.ultimaker.com/Cura_open_beta/Cura-${VERSION}.AppImage"
 else
-    URLS=$(curl -s https://api.github.com/repos/Ultimaker/Cura/releases | grep browser_download_url | cut -d: -f2- | cut -d'"' -f2 | grep -E '.AppImage$')
+    URLS=$(wget -q https://api.github.com/repos/Ultimaker/Cura/releases -O - | grep AppImage | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
     if [ "$VERSION" == "" ]; then
         URL=$(echo "$URLS" | head -n1)
         export VERSION=$(echo "$URL" | python3 -c "import re, sys; print(re.search('Cura-([\d\.]+)\.AppImage', sys.stdin.read()).group(1))")
