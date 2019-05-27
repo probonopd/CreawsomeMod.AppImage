@@ -99,12 +99,12 @@ sed -i -e 's|cura|creawseomemod|g' $TARGETDIR/cura/CuraVersion.py
 rm $TARGETDIR/cura/CuraVersion.pyc
 
 # Remove all but creawsome_ profiles and variants
-mv squashfs-root/usr/bin/resources/definitions/fdmprinter.def.json squashfs-root/usr/bin/resources/definitions/creawsome_*.def.json .
-rm squashfs-root/usr/bin/resources/definitions/*
-mv creawsome_*.def.json squashfs-root/usr/bin/resources/definitions/
-mv squashfs-root/usr/bin/resources/variants/creawsome_*.cfg .
-rm squashfs-root/usr/bin/resources/variants/*
-mv creawsome_*.cfg squashfs-root/usr/bin/resources/variants/
+# mv squashfs-root/usr/bin/resources/definitions/fdmprinter.def.json squashfs-root/usr/bin/resources/definitions/creawsome_*.def.json .
+# rm squashfs-root/usr/bin/resources/definitions/*
+# mv creawsome_*.def.json squashfs-root/usr/bin/resources/definitions/
+# mv squashfs-root/usr/bin/resources/variants/creawsome_*.cfg .
+# rm squashfs-root/usr/bin/resources/variants/*
+# mv creawsome_*.cfg squashfs-root/usr/bin/resources/variants/
 
 MODVER=$(echo $DLD | cut -d '/' -f 6)
 export VERSION=$VERSION.mod$MODVER
