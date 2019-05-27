@@ -91,7 +91,12 @@ TARGETDIR=$(find ./squashfs-root/usr/bin/lib/python* -type d | head -n 1)
 SHORTVERSION=$(echo $VERSION | cut -d "." -f 1-2)
 wget https://raw.githubusercontent.com/Ultimaker/Cura/$SHORTVERSION/cura/CuraApplication.py -O $TARGETDIR/cura/CuraApplication.py
 sed -i -e 's|name = "cura"|name = "creawseomemod"|g' $TARGETDIR/cura/CuraApplication.py || true
-sed -i -e 's|cura|creawseomemod|g' $TARGETDIR/cura/CuraVersion.pyc || true
+rm $TARGETDIR/cura/CuraApplication.pyc
+sudo apt install -y python3-pip
+sudo pip3 install uncompyle6
+uncompyle6 $TARGETDIR/cura/CuraVersion.pyc > $TARGETDIR/cura/CuraVersion.py
+sed -i -e 's|cura|creawseomemod|g' $TARGETDIR/cura/CuraVersion.py
+rm $TARGETDIR/cura/CuraVersion.pyc
 
 # Remove all but creawsome_ profiles and variants
 mv squashfs-root/usr/bin/resources/definitions/fdmprinter.def.json squashfs-root/usr/bin/resources/definitions/creawsome_*.def.json .
