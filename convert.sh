@@ -87,7 +87,7 @@ rm -rf CreawsomeMod-*.zip __MACOSX || true
 
 # Make it use .local/share/creawseomemod instead of .local/share/cura
 # so that settings do not get mixed up
-TARGETDIR=$(readlink -f ./squashfs-root/usr/bin/lib/python*)
+TARGETDIR=$(find ./squashfs-root/usr/bin/lib/python* -type d | head -n 1)
 wget https://raw.githubusercontent.com/Ultimaker/Cura/$VERSION/cura/CuraApplication.py -O $TARGETDIR/cura/CuraApplication.py
 sed -i -e 's|name = "cura"|name = "creawseomemod"|g' $TARGETDIR/cura/CuraApplication.py || true
 wget https://raw.githubusercontent.com/Ultimaker/Cura/$VERSION/cura/CuraVersion.py -O $TARGETDIR/cura/CuraVersion.py
