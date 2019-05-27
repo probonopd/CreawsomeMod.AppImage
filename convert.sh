@@ -87,6 +87,22 @@ unzip -q -o CreawsomeMod-*.zip
 rm -rf squashfs-root/usr/bin/resources
 mv ./resources ./squashfs-root/usr/bin/resources
 rm -rf CreawsomeMod-*.zip __MACOSX || true
+
+# Make it use .local/share/creawseomemod instead of .local/share/cura
+# so that settings do not get mixed up
+wget https://raw.githubusercontent.com/Ultimaker/Cura/$VERSION/cura/CuraApplication.py -O ./squashfs-root/usr/bin/lib/python*/cura/CuraApplication.py
+sed -i -e 's|name = "cura"|name = "creawseomemod"|g' squashfs-root/usr/bin/lib/python3.5/cura/CuraApplication.py || true
+wget https://raw.githubusercontent.com/Ultimaker/Cura/$VERSION/cura/CuraVersion.py -O ./squashfs-root/usr/bin/lib/python*5/cura/CuraVersion.py
+sed -i -e 's|\'cura\'|\'creawseomemod\'|g' squashfs-root/usr/bin/lib/python*/cura/CuraVersion.py || true
+
+# Remove all but creawsome_ profiles and variants
+mv squashfs-root/usr/bin/resources/definitions/fdmprinter.def.json squashfs-root/usr/bin/resources/definitions/creawsome_*.def.json .
+rm squashfs-root/usr/bin/resources/definitions/*
+mv creawsome_*.def.json squashfs-root/usr/bin/resources/definitions/
+mv squashfs-root/usr/bin/resources/variants/creawsome_*.cfg .
+rm squashfs-root/usr/bin/resources/variants/*
+mv creawsome_*.cfg squashfs-root/usr/bin/resources/variants/
+
 MODVER=$(echo $DLD | cut -d '/' -f 6)
 export VERSION=$VERSION.mod$MODVER
 
