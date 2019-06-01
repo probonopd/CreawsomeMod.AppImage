@@ -11,7 +11,7 @@ fi
 if (grep -q "BETA" <<< "$VERSION"); then
     URL="https://download.ultimaker.com/Cura_open_beta/Cura-${VERSION}.AppImage"
 else
-    URL=$(wget -q https://api.github.com/repos/Ultimaker/Cura/releases -O - | grep AppImage | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
+    URL=$(wget -q https://api.github.com/repos/Ultimaker/Cura/releases -O - | grep -e "AppImage\"" | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
     if [ "$VERSION" == "" ]; then
         export VERSION=$(echo $URL | cut -d '/' -f 8)
     fi
