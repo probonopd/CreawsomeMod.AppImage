@@ -6,7 +6,7 @@ This bundles Ultimaker Cura with [CreawsomeMod](https://github.com/trouch/Creaws
 
 ## Download AppImages
 
-The AppImage build using this script on Travis CI can be found on the [release page](/releases/latest).
+The AppImage build using this script on Travis CI can be found on the [release page](https://github.com/probonopd/CreawsomeMod.AppImage/releases).
 
 ## LICENSING
 
