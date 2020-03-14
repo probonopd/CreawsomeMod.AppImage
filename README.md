@@ -1,6 +1,6 @@
 # CreawsomeMod.AppImage
 
-Now integrated in Cura official releases since Version 4.2, you will benefit from CreawsomeMod machine settings as long you have a Creality Printer. Your settings should be kept and upgraded when updating Cura. This repo is kept as an history reference, issue tracker, and documentation.
+*__Now integrated in Cura official releases since Version 4.2, you will benefit from CreawsomeMod machine settings as long you have a Creality Printer. Your settings should be kept and upgraded when updating Cura. This repo is kept as an history reference, issue tracker, and documentation.__*
 
 This bundles Ultimaker Cura with [CreawsomeMod](https://github.com/trouch/CreawsomeMod/) as an AppImage for Linux.
 
